@@ -26,16 +26,18 @@ public class MainActivity extends AppCompatActivity {
         text = findViewById(R.id.editText1);
         fileNameText = findViewById(R.id.editText2);
         preferences = getPreferences(MODE_PRIVATE);
+
+        fileNameText.setText(preferences.getString(FILE_NAME, "Empty"));
+        text.setText(getText());
     }
 
     public void saveText(View view){
         FileOutputStream fos = null;
         try {
-            EditText textBox = findViewById(R.id.editText1);
-            String text = textBox.getText().toString();
+            String str = text.getText().toString();
 
             fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            fos.write(text.getBytes());
+            fos.write(str.getBytes());
             Toast.makeText(this, "Файл сохранен", Toast.LENGTH_SHORT).show();
         }
         catch(IOException ex) {
@@ -56,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public void openText(View view){
+    public String getText(){
         FileInputStream fin = null;
         try {
             fin = openFileInput(FILE_NAME);
             byte[] bytes = new byte[fin.available()];
             fin.read(bytes);
             String text = new String (bytes);
-            fileNameText.setText(text);
+            return text;
         }
         catch(IOException ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -78,5 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
+        return null;
     }
 }
