@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private EditText text;
-    private EditText fileNameText;
+    private EditText fileName;
     private final static String FILE_NAME = "file_name";
     private SharedPreferences preferences;
 
@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         text = findViewById(R.id.editText1);
-        fileNameText = findViewById(R.id.editText2);
+        fileName = findViewById(R.id.editText2);
         preferences = getPreferences(MODE_PRIVATE);
 
-        fileNameText.setText(preferences.getString(FILE_NAME, "Empty"));
+        fileName.setText(preferences.getString(FILE_NAME, "Empty"));
         text.setText(getText());
     }
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(FILE_NAME, fileNameText.getText().toString());
+        editor.putString(FILE_NAME, fileName.getText().toString());
         editor.apply();
     }
 
